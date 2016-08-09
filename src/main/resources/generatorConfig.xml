@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <classPathEntry
+            location="D:/SoftwareForCode/apache-maven-3.3.9/repository/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar" />
+    <context id="context1" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/mvn?useUnicode=true&amp;characterEncoding=utf-8"
+                        userId="root" password="im0918" />
+        <javaModelGenerator targetPackage="com.xiyuan.template.model"
+                            targetProject="D:\SoftwareForCode\MyEclipseProject\SpringAndMybatisByScala\src\main\scala" />
+        <sqlMapGenerator targetPackage="mapping"
+                         targetProject="D:\SoftwareForCode\MyEclipseProject\SpringAndMybatisByScala\src\main\resources" />
+        <javaClientGenerator targetPackage="com.xiyuan.template.dao"
+            targetProject="D:\SoftwareForCode\MyEclipseProject\SpringAndMybatisByScala\src\main\scala" type="XMLMAPPER" />
+        <table schema="mybits" tableName="tb_test" />
+    </context>
+</generatorConfiguration>
