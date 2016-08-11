@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xiyuan.template.dao.TbTestMapper">
+<mapper namespace="com.xiyuan.template.dao.TbTestDao">
   <resultMap id="BaseResultMap" type="com.xiyuan.template.model.TbTest">
     <!--
       WARNING - @mbggenerated
@@ -253,4 +253,18 @@
       content = #{content,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="page" parameterType="int" resultType="com.xiyuan.template.model.TbTest">
+    select * from tb_test LIMIT #{0},#{1};
+  </select>
+
+  <select id="idBetween" parameterType="int" resultType="com.xiyuan.template.model.TbTest">
+    select * from tb_test WHERE id &gt;= #{0} AND id &lt;= #{1};
+  </select>
+
+  <select id="maxId" resultType="int">
+    SELECT id from tb_test order by id desc limit 0,1;
+  </select>
+
+
 </mapper>

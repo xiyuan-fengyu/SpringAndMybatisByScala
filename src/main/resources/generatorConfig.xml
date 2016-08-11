@@ -8,11 +8,11 @@
                         connectionURL="jdbc:mysql://localhost:3306/mvn?useUnicode=true&amp;characterEncoding=utf-8"
                         userId="root" password="im0918" />
         <javaModelGenerator targetPackage="com.xiyuan.template.model"
-                            targetProject="D:\SoftwareForCode\MyEclipseProject\SpringAndMybatisByScala\src\main\scala" />
+                            targetProject="src\main\scala" />
         <sqlMapGenerator targetPackage="mapping"
-                         targetProject="D:\SoftwareForCode\MyEclipseProject\SpringAndMybatisByScala\src\main\resources" />
+                         targetProject="src\main\resources" />
         <javaClientGenerator targetPackage="com.xiyuan.template.dao"
-            targetProject="D:\SoftwareForCode\MyEclipseProject\SpringAndMybatisByScala\src\main\scala" type="XMLMAPPER" />
+            targetProject="src\main\scala" type="XMLMAPPER" />
         <table schema="mybits" tableName="tb_test" />
     </context>
 </generatorConfiguration>
