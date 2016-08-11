@@ -254,11 +254,11 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="page" parameterType="int" resultType="com.xiyuan.template.model.TbTest">
+  <select id="page" parameterType="int" resultMap="BaseResultMap">
     select * from tb_test LIMIT #{0},#{1};
   </select>
 
-  <select id="idBetween" parameterType="int" resultType="com.xiyuan.template.model.TbTest">
+  <select id="idBetween" parameterType="int" resultMap="BaseResultMap">
     select * from tb_test WHERE id &gt;= #{0} AND id &lt;= #{1};
   </select>
 
