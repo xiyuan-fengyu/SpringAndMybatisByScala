@@ -20,29 +20,33 @@ object ResponceUtil {
 
   private val gson = new Gson()
 
-  def createJson[T](data: T, success: Boolean, msg: String): JsonObject = {
+  def createJson[T](success: Boolean, msg: String): JsonObject = createJson(success, msg, null)
+
+  def createJson[T](success: Boolean, msg: String, data: T): JsonObject = {
     val result = new JsonObject
     result.addProperty(kSuccess, success)
     result.addProperty(kMessage, msg)
     result.addProperty(kTimestamp, System.currentTimeMillis())
 
-    try {
-      data match {
-        case n: Number =>
-          result.addProperty(kData, n)
-        case c: Character =>
-          result.addProperty(kData, c)
-        case b: Boolean =>
-          result.addProperty(kData, b)
-        case s: String =>
-          result.addProperty(kData, s)
-        case _ =>
-          result.add(kData, gson.toJsonTree(data))
+    if (data != null) {
+      try {
+        data match {
+          case n: Number =>
+            result.addProperty(kData, n)
+          case c: Character =>
+            result.addProperty(kData, c)
+          case b: Boolean =>
+            result.addProperty(kData, b)
+          case s: String =>
+            result.addProperty(kData, s)
+          case _ =>
+            result.add(kData, gson.toJsonTree(data))
+        }
       }
-    }
-    catch {
-      case e: Exception =>
-        e.printStackTrace()
+      catch {
+        case e: Exception =>
+          e.printStackTrace()
+      }
     }
 
     result
@@ -53,7 +57,7 @@ object ResponceUtil {
     tbTest.setId(123.toLong)
     tbTest.setName("123")
     tbTest.setContent("123")
-    println(createJson(tbTest, true, "好啊"))
+    println(createJson(true, "好啊", tbTest))
   }
 
 }
