@@ -15,10 +15,6 @@ import scala.collection.mutable.ArrayBuffer
 @Controller
 class LogController {
 
-  private val maxWaitTime = 20000
-
-  val logs: ArrayBuffer[String] = new ArrayBuffer[String]()
-
   @RequestMapping(value = Array("log"))
   def log(): String = {
     "log/index"
@@ -27,7 +23,7 @@ class LogController {
   @RequestMapping(value = Array("log/test"))
   @ResponseBody
   def logTest(): JsonObject = {
-    logs += "日志测试：" + new Date()
+    LogController.logs += "日志测试：" + new Date()
     val result = ResponseUtil.createJson(true, "测试日志添加成功")
     result
   }
@@ -36,14 +32,22 @@ class LogController {
   @ResponseBody
   def logList(): JsonObject = {
     var waitTime = 0
-    while (waitTime < maxWaitTime && logs.isEmpty) {
+    while (waitTime < LogController.maxWaitTime && LogController.logs.isEmpty) {
       Thread.sleep(100)
       waitTime += 100
     }
 
-    val result = ResponseUtil.createJson(true, "日志获取成功", logs.toArray)
-    logs.clear()
+    val result = ResponseUtil.createJson(true, "日志获取成功", LogController.logs.toArray)
+    LogController.logs.clear()
     result
   }
+
+}
+
+object LogController {
+
+  private val maxWaitTime = 20000
+
+  val logs: ArrayBuffer[String] = new ArrayBuffer[String]()
 
 }
