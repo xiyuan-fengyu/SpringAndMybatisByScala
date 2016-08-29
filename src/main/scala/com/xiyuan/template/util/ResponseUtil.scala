@@ -8,7 +8,7 @@ import scala.collection.mutable
 /**
   * Created by xiyuan_fengyu on 2016/8/25.
   */
-object ResponceUtil {
+object ResponseUtil {
 
   private val kData = "data"
 
