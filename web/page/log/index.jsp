@@ -37,6 +37,7 @@
       var taskFlag = null;
       var logList;
       var logClear;
+      var clientId;
 
       $(document).ready(function () {
         logList = $("#logList");
@@ -44,11 +45,17 @@
         logClear.click(function () {
           logList.val("");
         });
-
+        initClientId();
         startLogTask();
-
-
       });
+
+      function initClientId() {
+        clientId = localStorage.getItem("log.clientId");
+        if (clientId == null || clientId == "") {
+          clientId = new Date().getTime() + "_" + parseInt(Math.random() * 9999)
+          localStorage.setItem("log.clientId", clientId);
+        }
+      }
 
       function startLogTask() {
         taskFlag = new Date().getTime() + "_" + parseInt(Math.random() * 1000);
@@ -57,7 +64,7 @@
       }
 
       function logTask() {
-        $.get(ctx + "/log/list", function(result){
+        $.get(ctx + "/log/list?clientId=" + clientId + "&_=" + new Date().getTime(), function(result){
           if (result.data) {
             var logs = result.data;
             if (logs.length > 0) {
@@ -65,7 +72,8 @@
               for (var i = 0, len = logs.length; i < len; i++) {
                 newLogs += logs[i] + "\n";
               }
-              logList.val(logList.val() + newLogs);
+              var str = logList.val();
+              logList.val(str + newLogs);
             }
 
             if ($("#" + taskFlag).length > 0) {
