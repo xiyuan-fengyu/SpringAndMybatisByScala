@@ -28,6 +28,14 @@ class LogController {
     result
   }
 
+  @RequestMapping(value = Array("log/add"))
+  @ResponseBody
+  def logAdd(log: String): JsonObject = {
+    LogController.logs += log
+    val result = ResponseUtil.createJson(true, "测试日志添加成功")
+    result
+  }
+
   @RequestMapping(value = Array("log/list"))
   @ResponseBody
   def logList(): JsonObject = {

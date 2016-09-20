@@ -2,11 +2,11 @@
     "use strict";
 
     if (global["ClassTemplate"] == null) {
-        var clazz = function(){
+        var ClassTemplate = function(){
 
         };
 
-        global["ClassTemplate"] = clazz;
+        global["ClassTemplate"] = ClassTemplate;
     }
 
 })(this);
