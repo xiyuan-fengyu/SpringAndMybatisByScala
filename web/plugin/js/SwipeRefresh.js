@@ -23,6 +23,8 @@
 
         var SwipeRefresh = function(owner, aCircleSize){
 
+            this.owner = owner;
+
             var color = "#0e95ff";
 
             /**
