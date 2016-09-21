@@ -63,9 +63,10 @@
             var topMaxForDrag = 0;
 
             /**
-             * 记录触控点的y坐标
+             * 记录触控点的坐标
              * @type {number}
              */
+            var touchX = 0
             var touchY = 0;
 
             /**
@@ -87,6 +88,7 @@
                     dragStatus = scrollTop > 10? -1: 0;
 
                     var touch = e.originalEvent.targetTouches[0];
+                    touchX = touch.pageX;
                     touchY = touch.pageY;
 
                     remainDeltaY = 0;
@@ -95,14 +97,23 @@
 
             owner.on("touchmove", function (e) {
                 var touch = e.originalEvent.targetTouches[0];
+                var curX = touch.pageX;
                 var curY = touch.pageY;
                 if (dragStatus == 0) {
-                    dragStatus = curY - touchY > 0? 1: -1;
+                    if (Math.abs(touchX - curX) > Math.abs(touchY - curY) * 1.5) {
+                        //判定为水平拖动
+                        dragStatus = -1;
+                    }
+                    else {
+                        dragStatus = curY - touchY > 0? 1: -1;
+                    }
+
                     if (dragStatus == 1) {
                         refreshStatus = 0;
                         mainLoop();
                     }
                 }
+                touchX = curX;
 
                 if (dragStatus == -1) {
                     return true;
