@@ -296,7 +296,7 @@
 
             var onRefresh = function () {
                 if (onRefreshListener && $.isFunction(onRefreshListener)) {
-                    onRefreshListener();
+                    onRefreshListener(owner);
                 }
             };
 
