@@ -215,9 +215,26 @@
                 return circleSize * (Math.min(top, topWhenRefreshing) - topInitial) / (topWhenRefreshing - topInitial);
             };
 
+
             var PI = Math.PI;
             var PI2 = PI * 2;
             var sin = Math.sin;
+
+
+            /**
+             * 一些特殊角度
+             * @type {number}
+             */
+            var DefaultAngle = -PI / 2.0;
+            var StartAngles = {
+                WhenRefreshStart: 0,
+                WhenMaxDrag: -PI / 4.0
+            };
+            var EndAngles = {
+                WhenRefreshStart: PI / 4.0,
+                WhenMaxDrag: PI * 3 / 4.0
+            };
+
             /**
              * 在 refreshStatus = 0 的时候，计算始末角度
              * @param index
@@ -225,8 +242,8 @@
              */
             var computeAngleWhenDrag = function(top) {
                 var x = (top - topInitial) / (topMaxForDrag - topInitial);
-                startAngle = -PI / 2.0 + PI / 4.0 * x;
-                endAngle = -PI / 2.0 + PI * 5 / 4.0 * x;
+                startAngle = DefaultAngle + (StartAngles.WhenMaxDrag - DefaultAngle) * x;
+                endAngle = DefaultAngle + (EndAngles.WhenMaxDrag - DefaultAngle) * x;
             };
 
             /**
@@ -236,8 +253,8 @@
              */
             var computeAngleWhenGotoRefresh = function(top) {
                 var x = (top - topWhenRefreshing) / (topMaxForDrag - topWhenRefreshing);
-                startAngle = - PI / 4.0 * x;
-                endAngle = PI / 3.0 + PI * 5 / 12.0 * x;
+                startAngle = StartAngles.WhenRefreshStart + (StartAngles.WhenMaxDrag - StartAngles.WhenRefreshStart) * x;
+                endAngle = EndAngles.WhenRefreshStart + (EndAngles.WhenMaxDrag - EndAngles.WhenRefreshStart) * x;
             };
 
             var inscreaseIndexAngle = function() {
@@ -278,6 +295,7 @@
                     circleLoading.drawCircle(circleSize, startAngle, endAngle);
                 }
                 else if (refreshStatus == 3) {
+                    inscreaseIndexAngle();
                     circleLoading.drawCircle(circleSizeForTop(top), startAngle, endAngle);
                 }
             };
@@ -337,6 +355,7 @@
                     top: topInitial
                 }, (top  - topInitial) * 10, function () {
                     refreshStatus = -1;
+                    angleSpeedIndex = 0;
                 });
             };
 
