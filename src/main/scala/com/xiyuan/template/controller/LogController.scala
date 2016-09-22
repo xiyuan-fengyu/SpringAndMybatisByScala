@@ -3,6 +3,7 @@ package com.xiyuan.template.controller
 import java.util.Date
 
 import com.google.gson.JsonObject
+import com.xiyuan.template.log.XYLog
 import com.xiyuan.template.util.ResponseUtil
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMapping, ResponseBody}
@@ -108,3 +109,12 @@ object LogController {
   * @param msgIndex 客户端读取消息的游标
   */
 class LogClient(val id: String, var lastActionTime: Long, var msgIndex: Int)
+
+
+object Log {
+
+  def d(log: String): Unit = {
+    LogController.logs += log
+  }
+
+}
