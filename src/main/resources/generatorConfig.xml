@@ -13,6 +13,10 @@
                          targetProject="src/main/resources" />
         <javaClientGenerator targetPackage="com.xiyuan.template.dao"
             targetProject="src/main/scala" type="XMLMAPPER" />
-        <table schema="mybits" tableName="tb_test" />
+        <table schema="mybits" tableName="tb_test" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" >
+            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
     </context>
 </generatorConfiguration>

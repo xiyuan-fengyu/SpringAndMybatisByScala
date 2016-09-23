@@ -28,8 +28,9 @@ class TestController {
   @ResponseBody
   def testList(): JsonObject = {
     val result = new JsonObject
-    result.add("all", new Gson().toJsonTree(tbTestDao.selectByExample(null)))
-    result.add("maxId", new Gson().toJsonTree(tbTestDao.maxId()))
+    val maxId = tbTestDao.maxId()
+    result.add("all", new Gson().toJsonTree(tbTestDao.idBetween(0, maxId)))
+    result.add("maxId", new Gson().toJsonTree(maxId))
     result.add("idBetween", new Gson().toJsonTree(tbTestDao.idBetween(0, 10)))
     result.addProperty("success", true)
     result.addProperty("message", "test")

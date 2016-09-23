@@ -3,7 +3,6 @@ package com.xiyuan.template.controller
 import java.util.Date
 
 import com.google.gson.JsonObject
-import com.xiyuan.template.log.XYLog
 import com.xiyuan.template.util.ResponseUtil
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMapping, ResponseBody}
