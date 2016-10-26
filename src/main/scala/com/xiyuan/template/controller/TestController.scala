@@ -27,6 +27,24 @@ class TestController {
     result
   }
 
+  /**
+  @ RequestMapping(value = Array("test/string"), produces = Array("text/plain;charset=UTF-8"))
+  上面的注解只能局部解决问题，要想全局解决问题，可以在applicationContext.xml中添加如下配置，注意bean和annotation-driven的先后顺序不能错
+  <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" >
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<value>text/plain;charset=UTF-8</value>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<mvc:annotation-driven />
+    */
   @RequestMapping(value = Array("test/string"), produces = Array("text/plain;charset=UTF-8"))
   @ResponseBody
   def testString(): String = {
