@@ -21,9 +21,16 @@ class TestController {
   @ResponseBody
   def test(): JsonObject = {
     val result = new JsonObject
+    result.addProperty("data", "中文测试")
     result.addProperty("success", true)
     result.addProperty("message", "test")
     result
+  }
+
+  @RequestMapping(value = Array("test/string"), produces = Array("text/plain;charset=UTF-8"))
+  @ResponseBody
+  def testString(): String = {
+    "中文测试"
   }
 
   @RequestMapping(value = Array("test/list"))
