@@ -20,6 +20,12 @@ object ResponseUtil {
 
   private val gson = new Gson()
 
+  def success[T](msg: String): JsonObject = createJson(true, msg, null)
+
+  def success[T](msg: String, data: T): JsonObject = createJson(true, msg, data)
+
+  def fail[T](msg: String): JsonObject = createJson(false, msg, null)
+
   def createJson[T](success: Boolean, msg: String): JsonObject = createJson(success, msg, null)
 
   def createJson[T](success: Boolean, msg: String, data: T): JsonObject = {
