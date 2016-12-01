@@ -74,7 +74,7 @@ class TestController {
   def rollback(): JsonObject = {
     val result = new JsonObject
 
-    result.addProperty("before", XYLog.anyToString(testService.find(1)))
+    result.addProperty("before", XYLog.anyToString(testService.selectByPrimaryKey(1)))
     try {
       testService.testRollback(1)
     }
@@ -82,7 +82,7 @@ class TestController {
       case e: Exception =>
         result.addProperty("exception", e.getMessage)
     }
-    result.addProperty("afterRollbackTest", XYLog.anyToString(testService.find(1)))
+    result.addProperty("afterRollbackTest", XYLog.anyToString(testService.selectByPrimaryKey(1)))
 
     result.addProperty("success", true)
     result.addProperty("message", "rollback test")

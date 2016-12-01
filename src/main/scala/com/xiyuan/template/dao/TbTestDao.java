@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by xiyuan_fengyu on 2016/8/11.
  */
-public interface TbTestDao extends TbTestMapper {
+public interface TbTestDao extends CommonDao<TbTest> {
 
     List<TbTest> page(int pageNum, int pageSize);
 

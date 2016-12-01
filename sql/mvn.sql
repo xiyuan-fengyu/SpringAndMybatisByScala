@@ -40,7 +40,7 @@ INSERT INTO `tb_score` VALUES ('4', 'Caselin', '1', '10');
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_test`;
 CREATE TABLE `tb_test` (
-  `id` bigint(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(255) NOT NULL COMMENT '名字',
   `content` varchar(255) NOT NULL COMMENT '内容',
   PRIMARY KEY (`id`)

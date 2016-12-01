@@ -1,6 +1,6 @@
 package com.xiyuan.template.service
 
-import com.xiyuan.template.dao.TbTestDao
+import com.xiyuan.template.dao.{CommonDao, TbTestDao}
 import com.xiyuan.template.model.TbTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -11,10 +11,12 @@ import org.springframework.transaction.annotation.Transactional
   */
 @Service
 @Transactional(rollbackFor = Array(classOf[Exception]))
-class TestService {
+class TestService extends CommonService[TbTest]{
 
   @Autowired
   private val testDao: TbTestDao = null
+
+  override protected def dao: CommonDao[TbTest] = testDao
 
   def idBetween(start: Int, end: Int): Array[TbTest] = {
     testDao.idBetween(start, end).toArray().map(_.asInstanceOf[TbTest])
@@ -28,11 +30,7 @@ class TestService {
     testDao.page(pageNum, pageSize).toArray().map(_.asInstanceOf[TbTest])
   }
 
-  def find(id: Long): TbTest = {
-    testDao.selectByPrimaryKey(id)
-  }
-
-  def testRollback(id: Long): Unit = {
+  def testRollback(id: Int): Unit = {
     val item = testDao.selectByPrimaryKey(id)
     item.setName("newNameForRollbackTest")
     item.setContent("newContentForRollbackTest")

@@ -60,7 +60,7 @@ object ResponseUtil {
 
   def main(args: Array[String]) {
     val tbTest = new TbTest
-    tbTest.setId(123.toLong)
+    tbTest.setId(123)
     tbTest.setName("123")
     tbTest.setContent("123")
     println(createJson(true, "好啊", tbTest))

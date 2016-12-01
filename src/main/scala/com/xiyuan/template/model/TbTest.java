@@ -4,7 +4,7 @@ public class TbTest {
     /**
      * 主键
      */
-    private Long id;
+    private Integer id;
 
     /**
      * 名字
@@ -22,9 +22,9 @@ public class TbTest {
      *
      * @return the value of tb_test.id
      *
-     * @mbggenerated Tue Oct 18 19:08:42 CST 2016
+     * @mbggenerated Thu Dec 01 15:06:05 CST 2016
      */
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -34,9 +34,9 @@ public class TbTest {
      *
      * @param id the value for tb_test.id
      *
-     * @mbggenerated Tue Oct 18 19:08:42 CST 2016
+     * @mbggenerated Thu Dec 01 15:06:05 CST 2016
      */
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,7 +46,7 @@ public class TbTest {
      *
      * @return the value of tb_test.name
      *
-     * @mbggenerated Tue Oct 18 19:08:42 CST 2016
+     * @mbggenerated Thu Dec 01 15:06:05 CST 2016
      */
     public String getName() {
         return name;
@@ -58,7 +58,7 @@ public class TbTest {
      *
      * @param name the value for tb_test.name
      *
-     * @mbggenerated Tue Oct 18 19:08:42 CST 2016
+     * @mbggenerated Thu Dec 01 15:06:05 CST 2016
      */
     public void setName(String name) {
         this.name = name;
@@ -70,7 +70,7 @@ public class TbTest {
      *
      * @return the value of tb_test.content
      *
-     * @mbggenerated Tue Oct 18 19:08:42 CST 2016
+     * @mbggenerated Thu Dec 01 15:06:05 CST 2016
      */
     public String getContent() {
         return content;
@@ -82,7 +82,7 @@ public class TbTest {
      *
      * @param content the value for tb_test.content
      *
-     * @mbggenerated Tue Oct 18 19:08:42 CST 2016
+     * @mbggenerated Thu Dec 01 15:06:05 CST 2016
      */
     public void setContent(String content) {
         this.content = content;
