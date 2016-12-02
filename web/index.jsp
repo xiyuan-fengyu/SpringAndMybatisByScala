@@ -13,6 +13,9 @@
   <meta http-equiv="keywords" content="首页,页面模板">
   <meta http-equiv="description" content="首页,页面模板">
 
+  <link rel="icon" href="<%=ctx%>/image/favicon/favicon32.ico" type="image/x-icon"/>
+  <link rel="shortcut icon" href="<%=ctx%>/image/favicon/favicon16.ico" type="image/x-icon"/>
+
   <!-- 新 Bootstrap 核心 CSS 文件 -->
   <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="<%=ctx%>/css/font-awesome.min.css">
