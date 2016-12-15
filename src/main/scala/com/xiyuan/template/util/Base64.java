@@ -271,8 +271,7 @@ public final class Base64 {
 	public static String encodeUTF8(String str)
 	{
 		try {
-			String encode = encode(str.getBytes("utf-8"));
-			return  encode;
+			return encode(str.getBytes("utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
