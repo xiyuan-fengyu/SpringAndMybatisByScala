@@ -108,11 +108,11 @@
   </update>
 
   <select id="page" parameterType="int" resultMap="BaseResultMap">
-    select * from tb_test LIMIT #{0},#{1};
+    select * from tb_test LIMIT #{startIndex},#{pageSize};
   </select>
 
   <select id="idBetween" parameterType="int" resultMap="BaseResultMap">
-    select * from tb_test WHERE id &gt;= #{0} AND id &lt;= #{1};
+    select * from tb_test WHERE id &gt;= #{start} AND id &lt;= #{end};
   </select>
 
   <select id="maxId" resultType="int">

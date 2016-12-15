@@ -2,6 +2,7 @@ package com.xiyuan.template.dao;
 
 
 import com.xiyuan.template.model.TbTest;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,9 +11,9 @@ import java.util.List;
  */
 public interface TbTestDao extends CommonDao<TbTest> {
 
-    List<TbTest> page(int pageNum, int pageSize);
+    List<TbTest> page(@Param("startIndex") int startIndex, @Param("pageSize") int pageSize);
 
-    List<TbTest> idBetween(int start, int end);
+    List<TbTest> idBetween(@Param("start") int start, @Param("end") int end);
 
     int maxId();
 
