@@ -89,4 +89,6 @@ class TestController {
     result
   }
 
+  @RequestMapping(value = Array("es6")) def angularJs2 = "es6/index"
+
 }
