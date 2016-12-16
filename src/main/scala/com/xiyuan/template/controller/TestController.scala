@@ -1,15 +1,15 @@
 package com.xiyuan.template.controller
 
 import com.google.gson.{Gson, JsonObject}
-import com.xiyuan.template.dao.{TbTestDao, TbTestMapper}
 import com.xiyuan.template.log.XYLog
 import com.xiyuan.template.service.TestService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMapping, ResponseBody}
 
+
 /**
-  * Created by YT on 2016/6/30.
+  * Created by xiyuan_fengyu on 2016/6/30.
   */
 @Controller
 class TestController {
@@ -30,6 +30,7 @@ class TestController {
   /**
   @ RequestMapping(value = Array("test/string"), produces = Array("text/plain;charset=UTF-8"))
   上面的注解只能局部解决问题，要想全局解决问题，可以在applicationContext.xml中添加如下配置，注意bean和annotation-driven的先后顺序不能错
+  如果客户端在请求的时候不明确指出Accept:text/plain;charset=UTF-8,那么很有可能会采用Gson的转换器，所以这里暂时使用注解的方式
   <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" >
 		<property name="messageConverters">
 			<list>
@@ -89,6 +90,10 @@ class TestController {
     result
   }
 
-  @RequestMapping(value = Array("es6")) def angularJs2 = "es6/index"
+  /**
+    * javascript es6 测试
+    * @return
+    */
+  @RequestMapping(value = Array("test/es6")) def angularJs2 = "es6/index"
 
 }
