@@ -28,6 +28,7 @@
         .input {
             position: relative;
             display: block;
+            overflow: auto;
             top: 0;
             left: 0;
             text-align: center;
@@ -223,7 +224,7 @@
                             var item = items[i];
                             if(item.kind == 'file' || item.type.indexOf('image') > -1) {
                                 var imageFile = item.getAsFile();
-                                getResizeBase64(1366, 1, getObjectURL(imageFile), function(result){
+                                getResizeBase64(null, 1, getObjectURL(imageFile), function(result){
                                     var id = new Date().getTime() + "_" + parseInt(Math.random() * 10000);
                                     $(result.canvas).attr("id", "canvas_" + id);
                                     $(result.canvas).css("display", "none");
@@ -263,7 +264,7 @@
                                     alert("该浏览器不支持图片粘贴");
                                     return;
                                 }
-                                getResizeBase64(1366, 1, src, function(result){
+                                getResizeBase64(null, 1, src, function(result){
                                     var id = new Date().getTime() + "_" + parseInt(Math.random() * 10000);
                                     $(result.canvas).attr("id", "canvas_" + id);
                                     $(result.canvas).css("display", "none");
@@ -294,7 +295,14 @@
             var clickX = event.offsetX;
             var clickY = event.offsetY;
             var canvasContext = $("#canvas_" + dataId)[0].getContext('2d');
-            myPreBox.canvas[0].getContext('2d').putImageData(canvasContext.getImageData(clickX - 75, clickY - 75, 150, 150), 0, 0);
+
+            var myPreCanvasContext = myPreBox.canvas[0].getContext('2d');
+            myPreCanvasContext.putImageData(canvasContext.getImageData(clickX - 75, clickY - 75, 150, 150), 0, 0);
+            var tempImg = new Image();
+            tempImg.src = myPreBox.canvas[0].toDataURL("image/png");
+            //缩放 200 / 150
+            myPreCanvasContext.drawImage(tempImg, 0, 0, 150, 150, -25, -25, 200, 200)
+
             var clickData = canvasContext.getImageData(clickX, clickY, 1, 1);
             var r = clickData.data[0];
             var g = clickData.data[1];
