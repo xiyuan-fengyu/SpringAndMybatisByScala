@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>图片取色器</title>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="图片取色器">
+    <meta http-equiv="description" content="图片取色器">
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .inputBox {
+            position: relative;
+            display: block;
+        }
+
+        .input {
+            position: relative;
+            display: block;
+            top: 0;
+            left: 0;
+            text-align: center;
+        }
+
+        .img {
+            cursor: crosshair;
+        }
+
+        .result {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+        }
+
+        .preBox {
+            position: relative;
+            display: block;
+            margin: 25px 25px;
+        }
+
+        .hLine {
+            position: absolute;
+            top: 74px;
+            left: 0;
+            width: 150px;
+            height: 2px;
+        }
+
+        .vLine {
+            position: absolute;
+            top: 0;
+            left: 74px;
+            width: 2px;
+            height: 150px;
+        }
+
+        .keyVal {
+            position: relative;
+            display: block;
+            overflow: visible;
+            margin: 0 12px;
+            line-height: 3rem;
+            cursor: copy;
+        }
+
+        .key {
+            display: inline-block;
+            width: 4rem;
+            color: #999999;
+            font-size: 2rem;
+            line-height: 3rem;
+        }
+
+        .val {
+            display: inline-block;
+            font-size: 2rem;
+            line-height: 3rem;
+        }
+
+        .val.r {
+            color: #ff6666;
+        }
+
+        .val.g {
+            color: #fffb03;
+        }
+
+        .val.b {
+            color: #1b9eff;
+        }
+
+        .val.a {
+            color: #d2cecf;
+        }
+
+        .val.rgba,
+        .val.hex {
+            color: #ffffff;
+            word-break: break-all;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="myInputBox" class="inputBox">
+        <div class="input" contenteditable="true">
+
+        </div>
+        <div class="result">
+            <div class="preBox">
+                <canvas class="preCanvas" width="150" height="150"></canvas>
+                <div class="hLine line"></div>
+                <div class="vLine line"></div>
+            </div>
+
+            <div class="keyVal">
+                <div class="key">r</div>
+                <div class="val r">255</div>
+            </div>
+            <div class="keyVal">
+                <div class="key">g</div>
+                <div class="val g">255</div>
+            </div>
+            <div class="keyVal">
+                <div class="key">b</div>
+                <div class="val b">255</div>
+            </div>
+            <div class="keyVal">
+                <div class="key">a</div>
+                <div class="val a">255</div>
+            </div>
+            <div class="keyVal">
+                <div class="key">rgba</div>
+                <div class="val rgba">rgba(255,255,255,1)</div>
+            </div>
+            <div class="keyVal">
+                <div class="key">hex</div>
+                <div class="val hex">#ffffff</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!--复制到粘贴板-->
+<script src="http://cdn.bootcss.com/zeroclipboard/2.3.0/ZeroClipboard.js"></script>
+<script>
+    (function(){
+        var myInputBox;
+        var myInput;
+        var myResult;
+        var myPreBox;
+        var myKeyVals;
+        var clipboard;
+
+        $(window).resize(function(){
+            resizeInputBox();
+        });
+
+        function resizeInputBox() {
+            myInput.width($(window).width() - 200);
+            var winH = $(window).height();
+            myInput.height(winH);
+            myResult.height(winH);
+        }
+
+        $(document).ready(function(){
+            myInputBox = $("#myInputBox");
+            myInput = myInputBox.find(".input");
+            myResult = myInputBox.find(".result");
+            myPreBox = myResult.find(".preBox");
+            myPreBox.canvas = myPreBox.find(".preCanvas");
+            myPreBox.lines = myPreBox.find(".line");
+            resizeInputBox();
+
+            myKeyVals = myResult.find(".keyVal");
+            myKeyVals.r = myKeyVals.find(".val.r");
+            myKeyVals.g = myKeyVals.find(".val.g");
+            myKeyVals.b = myKeyVals.find(".val.b");
+            myKeyVals.a = myKeyVals.find(".val.a");
+            myKeyVals.rgba = myKeyVals.find(".val.rgba");
+            myKeyVals.hex = myKeyVals.find(".val.hex");
+
+            ZeroClipboard.config({ swfPath: "http://cdn.bootcss.com/zeroclipboard/2.3.0/ZeroClipboard.swf" });
+            clipboard = new ZeroClipboard(myKeyVals);
+            clipboard.on( 'ready', function(event) {
+                clipboard.on( 'copy', function(event) {
+                    event.clipboardData.setData('text/plain', $(event.target).find(".val").text());
+                } );
+            });
+            clipboard.on( 'error', function(event) {
+                ZeroClipboard.destroy();
+            });
+
+            myInput.bind("paste", function(event){
+                var clipboard = event.originalEvent.clipboardData;
+                var brower = "";
+                if(clipboard != undefined)
+                {
+                    var items = clipboard.items;
+                    if(items != undefined)
+                    {
+                        //chrome
+                        brower = "chrome";
+                        var size = items.length;
+                        for(var i=0; i < size; i++) {
+                            var item = items[i];
+                            if(item.kind == 'file' || item.type.indexOf('image') > -1) {
+                                var imageFile = item.getAsFile();
+                                getResizeBase64(1366, 1, getObjectURL(imageFile), function(result){
+                                    var id = new Date().getTime() + "_" + parseInt(Math.random() * 10000);
+                                    $(result.canvas).attr("id", "canvas_" + id);
+                                    $(result.canvas).css("display", "none");
+                                    myInputBox.append(result.canvas);
+                                    insertIntoEditDiv(myInput[0], "<img data-id='" + id + "' class='resized img' src='" + result.base64 + "'>");
+                                    $(".img[data-id=" + id + "]").click(function (event) {
+                                        imgClick($(this).attr("data-id"), event);
+                                    });
+                                });
+                                event.preventDefault();
+                            }
+                        }
+                    }
+                }
+                if(brower == "")
+                {
+                    setTimeout(function(){
+                        var imgs = myInput.find("img");
+                        var size = imgs.length;
+                        for(var i = 0; i < size; i ++)
+                        {
+                            var img = imgs[i];
+                            if(img.className.indexOf("resized") == -1)
+                            {
+                                var src = img.currentSrc;
+                                if(src != undefined)
+                                {
+                                    brower = "firefox";
+                                }
+                                else
+                                {
+                                    brower = "ie";
+                                    src = img.href;
+                                }
+                                if(src == undefined)
+                                {
+                                    alert("该浏览器不支持图片粘贴");
+                                    return;
+                                }
+                                getResizeBase64(1366, 1, src, function(result){
+                                    var id = new Date().getTime() + "_" + parseInt(Math.random() * 10000);
+                                    $(result.canvas).attr("id", "canvas_" + id);
+                                    $(result.canvas).css("display", "none");
+                                    myInputBox.append(result.canvas);
+                                    insertIntoEditDiv(myInput[0], "<img data-id='" + id + "' class='resized img' src='" + result.base64 + "'>");
+                                    $(".img[data-id=" + id + "]").click(function (event) {
+                                        imgClick($(this).attr("data-id"), event);
+                                    });
+                                });
+
+                                if(brower == "firefox")
+                                {
+                                    img.remove();
+                                }
+                                else
+                                {
+                                    img.parentNode.removeChild(img);
+                                }
+                            }
+                        }
+                    }, 1);
+                }
+            });
+
+        });
+
+        function imgClick(dataId, event) {
+            var clickX = event.offsetX;
+            var clickY = event.offsetY;
+            var canvasContext = $("#canvas_" + dataId)[0].getContext('2d');
+            myPreBox.canvas[0].getContext('2d').putImageData(canvasContext.getImageData(clickX - 75, clickY - 75, 150, 150), 0, 0);
+            var clickData = canvasContext.getImageData(clickX, clickY, 1, 1);
+            var r = clickData.data[0];
+            var g = clickData.data[1];
+            var b = clickData.data[2];
+            var a = clickData.data[3];
+            var rgba = "rgba(" + r + "," + g + "," + b + "," + a / 255.0  + ")";
+            var rStr = r.toString(16);
+            var gStr = g.toString(16);
+            var bStr = b.toString(16);
+            var hex = "#" + (rStr.length == 1 ? "0" : "") + rStr + (gStr.length == 1 ? "0" : "") + gStr + (bStr.length == 1 ? "0" : "") + bStr;
+
+            myPreBox.lines.css("background", "rgba(" + r + "," + g + "," + b + "," + a / 255.0 * 0.4  + ")");
+
+            myKeyVals.r.text(r);
+            myKeyVals.g.text(g);
+            myKeyVals.b.text(b);
+            myKeyVals.a.text(a);
+            myKeyVals.rgba.text(rgba);
+            myKeyVals.rgba.css("color", rgba);
+            myKeyVals.hex.text(hex);
+            myKeyVals.hex.css("color", hex);
+        }
+
+        function insertIntoEditDiv(myField, html){
+            var sel, range;
+            if (window.getSelection)
+            {
+                // IE9 and non-IE
+                sel = window.getSelection();
+                if (sel.getRangeAt && sel.rangeCount)
+                {
+                    range = sel.getRangeAt(0);
+                    range.deleteContents();
+                    // Range.createContextualFragment() would be useful here but is
+                    // non-standard and not supported in all browsers (IE9, for one)
+                    var el = document.createElement("div");
+                    el.innerHTML = html;
+                    var frag = document.createDocumentFragment(), node;
+                    var lastNode = null;
+                    while ( (node = el.firstChild) ) {
+                        lastNode = frag.appendChild(node);
+                    }
+                    range.insertNode(frag);
+                    // Preserve the selection
+                    if (lastNode) {
+                        range = range.cloneRange();
+                        range.setStartAfter(lastNode);
+                        range.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+                    }
+                }
+            }
+            else if (document.selection && document.selection.type != "Control")
+            {
+                // IE < 9
+                document.selection.createRange().pasteHTML(html);
+            }
+        }
+
+        function getResizeBase64(maxW, quality, blob, callback) {
+            var img = new Image();
+            img.src = blob;
+
+            img.onload = function() {
+                var that = this;
+
+                var w = that.width,
+                    h = that.height,
+                    scale = w / h;
+                if(w > maxW)
+                {
+                    w = maxW || w;
+                    h = w / scale;
+                }
+
+                var canvas = document.createElement('canvas');
+                var ctx = canvas.getContext('2d');
+                $(canvas).attr({
+                    width: w,
+                    height: h
+                });
+                ctx.fillStyle="#ffffff";
+                ctx.fillRect(0,0,w,h);
+                ctx.drawImage(that, 0, 0, w, h);
+
+                var base64 = canvas.toDataURL('image/jpeg', quality);
+
+                if (navigator.userAgent.match(/iphone/i)) {
+                    var mpImg = new MegaPixImage(img);
+                    mpImg.render(canvas, {
+                        maxWidth: w,
+                        maxHeight: h,
+                        quality: 1
+                    });
+                    base64 = canvas.toDataURL('image/jpeg', quality);
+                }
+
+                if (navigator.userAgent.match(/Android/i)) {
+                    var encoder = new JPEGEncoder();
+                    base64 = encoder.encode(ctx.getImageData(0, 0, w, h), quality);
+                }
+
+                var result = {
+                    canvas: canvas,
+                    width: w,
+                    height: h,
+                    base64: base64,
+                    clearBase64: base64.substr(base64.indexOf(',') + 1),
+                };
+
+                callback(result);
+            }
+        }
+
+        function getObjectURL(file) {
+            var url = null ;
+            if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            } else if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
+            }
+            return url ;
+        }
+
+    })();
+</script>
+
+</html>
