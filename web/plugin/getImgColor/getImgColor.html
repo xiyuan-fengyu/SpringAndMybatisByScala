@@ -184,6 +184,15 @@
         $(document).ready(function(){
             myInputBox = $("#myInputBox");
             myInput = myInputBox.find(".input");
+            myInput.on("input", function () {
+                myInputBox.children("canvas").removeClass("checked");
+                myInput.find("img").each(function() {
+                   var canvasId = $(this).attr("data-id");
+                   $("#canvas_" + canvasId).addClass("checked");
+                });
+                myInputBox.children("canvas").not(".checked").remove();
+            });
+
             myResult = myInputBox.find(".result");
             myPreBox = myResult.find(".preBox");
             myPreBox.canvas = myPreBox.find(".preCanvas");
