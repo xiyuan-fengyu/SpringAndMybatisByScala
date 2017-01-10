@@ -18,7 +18,7 @@ log4j.appender.MyLogFile.layout=org.apache.log4j.PatternLayout
 log4j.appender.MyLogFile.layout.ConversionPattern= %d %p [%c] %m%n
 
 #debug log for spring
-log4j.logger.org.springframework=DEBUG
+log4j.logger.org.springframework=INFO
 
 # debug log for ibatis
 log4j.logger.java.sql.Connection=DEBUG

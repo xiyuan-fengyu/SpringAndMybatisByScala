@@ -3,6 +3,8 @@ package com.xiyuan.template.controller
 import com.google.gson.{Gson, JsonObject}
 import com.xiyuan.template.log.XYLog
 import com.xiyuan.template.service.TestService
+import com.xiyuan.template.util.{ResponseUtil}
+import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMapping, ResponseBody}
@@ -95,5 +97,21 @@ class TestController {
     * @return
     */
   @RequestMapping(value = Array("test/es6")) def angularJs2 = "es6/index"
+
+  val logger: Logger = LoggerFactory.getLogger("MyLog")
+  /**
+    * 打印日志
+    *
+    * @return
+    */
+  @RequestMapping(value = Array("/test/log"))
+  @ResponseBody
+  def testLog(log: String): JsonObject = {
+    logger.debug(log)
+    logger.info(log)
+    logger.warn(log)
+    logger.error(log)
+    ResponseUtil.success("日志打印测试")
+  }
 
 }
