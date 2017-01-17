@@ -56,32 +56,6 @@
 <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-<script type="text/javascript">
-    (function(){
-        class Logger {
-            constructor() {
-                this.dom = document.querySelector("#logger");
-                this.logs = [];
-            }
-
-            log(str) {
-                this.logs.push(str);
-                this.dom.innerHTML = this.logs.map(item => '<li class="list-group-item">' + item.replace(/\n/g, '<br>') + '</li>').join("");
-            }
-        }
-
-        let logger = new Logger();
-
-        $(document).ready(() => {
-            let inputLog = $("#inputLog");
-
-            $("#addLog").click(() => {
-               logger.log(inputLog.val());
-            });
-        });
-
-    })();
-</script>
+<script src="<%=ctx%>/page/es6/index.js"></script>
 
 </html>
