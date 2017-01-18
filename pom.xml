@@ -182,6 +182,15 @@
         <!-- Gson end -->
 
 
+        <!--jsoup start-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.8.3</version>
+        </dependency>
+        <!--jsoup end-->
+
+
         <!-- mysql start -->
         <dependency>
             <groupId>mysql</groupId>
