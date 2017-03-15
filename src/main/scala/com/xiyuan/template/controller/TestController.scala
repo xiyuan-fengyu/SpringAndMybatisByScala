@@ -114,4 +114,11 @@ class TestController {
     ResponseUtil.success("日志打印测试")
   }
 
+  @RequestMapping(value = Array("/test/block"))
+  @ResponseBody
+  def testBlock(log: String): JsonObject = {
+    Thread.sleep(10000)
+    ResponseUtil.success("123")
+  }
+
 }
